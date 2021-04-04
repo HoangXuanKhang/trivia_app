@@ -7,4 +7,5 @@
     <string name="score_text">Score: </string>
     <string name="_0">0</string>
     <string name="hightScore_text">Hight score: </string>
+    <string name="share_text">Share</string>
 </resources>

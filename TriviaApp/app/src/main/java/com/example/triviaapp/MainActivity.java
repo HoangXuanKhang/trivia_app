@@ -3,6 +3,7 @@ package com.example.triviaapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView counterTextView,questionTextView,countScoreTextView,countHighScoreTextView;
     private ImageButton nextButton,prevButton;
-    private Button trueButton,falseButton;
+    private Button trueButton,falseButton,shareButton;
     private int currentQuestionIndex = 0;
     private List<Question> questionList;
     private CardView cardView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cardView = findViewById(R.id.cardView);
         countScoreTextView =  findViewById(R.id.countScore_textView);
         countHighScoreTextView = findViewById(R.id.countHightScore);
+        shareButton = findViewById(R.id.shareButton);
 
         sharedPreferences2 = getSharedPreferences("CURRENT_INDEX",MODE_PRIVATE);
 
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         falseButton.setOnClickListener(this);
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
+        shareButton.setOnClickListener(this);
 
 
 
@@ -97,7 +100,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 checkAnswer(false);
                 updateQuestion();
                 break;
+            case R.id.shareButton:
+                scoreShare();
+                break;
         }
+    }
+
+    private void scoreShare() {
+        Log.d("Test", "scoreShare: yes" );
+        String message = "Current score: " + score + "\n" + "High score:" + highScore;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT,"I am playing trivia");
+        intent.putExtra(Intent.EXTRA_TEXT,message);
+        startActivity(intent);
     }
 
 
